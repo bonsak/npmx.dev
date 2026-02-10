@@ -495,6 +495,8 @@ const likeAction = async () => {
   }
 }
 
+const dependencyCount = computed(() => getDependencyCount(displayVersion.value))
+
 const numberFormatter = useNumberFormatter()
 const compactNumberFormatter = useCompactNumberFormatter()
 const bytesFormatter = useBytesFormatter()
@@ -855,12 +857,10 @@ const showSkeleton = shallowRef(false)
             <dd class="font-mono text-sm text-fg flex items-center justify-start gap-2">
               <span class="flex items-center gap-1">
                 <!-- Direct deps (muted) -->
-                <span class="text-fg-muted">{{
-                  numberFormatter.format(getDependencyCount(displayVersion))
-                }}</span>
+                <span class="text-fg-muted">{{ numberFormatter.format(dependencyCount) }}</span>
 
                 <!-- Separator and total transitive deps -->
-                <template v-if="getDependencyCount(displayVersion) !== totalDepsCount">
+                <template v-if="dependencyCount > 0 && dependencyCount !== totalDepsCount">
                   <span class="text-fg-subtle">/</span>
 
                   <ClientOnly>
@@ -886,7 +886,7 @@ const showSkeleton = shallowRef(false)
                   </ClientOnly>
                 </template>
               </span>
-              <ButtonGroup v-if="getDependencyCount(displayVersion) > 0">
+              <ButtonGroup v-if="dependencyCount > 0">
                 <LinkBase
                   variant="button-secondary"
                   size="small"
@@ -932,7 +932,7 @@ const showSkeleton = shallowRef(false)
               </span>
 
               <!-- Separator and install size -->
-              <template v-if="getDependencyCount(displayVersion) > 0">
+              <template v-if="displayVersion?.dist?.unpackedSize !== installSize?.totalSize">
                 <span class="text-fg-subtle mx-1">/</span>
 
                 <span
