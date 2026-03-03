@@ -208,6 +208,12 @@ headline="Read more from the community"
     title: 'Collaborating with npmx',
     authorHandle: '43081j.com',
     description: 'How the e18e community is collaborating closely with npmx to make best practices more visible and accessible to everyone in the ecosystem.'
+  },
+  {
+    url: 'https://youtu.be/NoC5U6F6p4Y',
+    title: 'The npmjs.com that developers deserve - What is npmx? (video)',
+    authorHandle: 'thealexlichter.com',
+    description: 'An introductory video showcasing Alex\'s favorite features of npmx and the open-source idea behind it.'
   }
 ]"
 />
