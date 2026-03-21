@@ -113,6 +113,12 @@ vi.mock('vue-data-ui/vue-ui-xy', () => {
   }
 })
 
+vi.mock('~/composables/useCanGoBack', () => {
+  return {
+    useCanGoBack: () => shallowRef(true),
+  }
+})
+
 // Import components from #components where possible
 // For server/client variants, we need to import directly to test the specific variant
 import {
@@ -125,6 +131,7 @@ import {
   AboutLogoList,
   AuthorAvatar,
   AuthorList,
+  BackButton,
   BlogPostFederatedArticles,
   BlogPostListCard,
   BlogPostWrapper,
@@ -452,6 +459,15 @@ describe('component accessibility audits', () => {
         props: { isExactMatch: true },
         slots: { default: '<p>Exact match content</p>' },
       })
+      const results = await runAxe(component)
+      expect(results.violations).toEqual([])
+    })
+  })
+
+  describe('BackButton', () => {
+    it('should have no accessibility violations', async () => {
+      const component = await mountSuspended(BackButton)
+      expect(component.find('button').exists()).toBe(true)
       const results = await runAxe(component)
       expect(results.violations).toEqual([])
     })
